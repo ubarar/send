@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"io"
 	"log/slog"
@@ -70,10 +71,15 @@ func listFilesHandler(w http.ResponseWriter, r *http.Request) {
 
 func downloadHandler(w http.ResponseWriter, r *http.Request) {
 	// make an assumption about where the file is
-	http.ServeFile(w, r, filepath.Join("./storage", strings.TrimPrefix(r.URL.Path, "/download/")))
+	http.ServeFile(w, r, filepath.Join(pkg.StoragePrefix, strings.TrimPrefix(r.URL.Path, "/download/")))
 }
 
 func main() {
+	storage := flag.String("storage", ".", "where files will be stored")
+	flag.Parse()
+
+	pkg.Initialize(*storage)
+
 	// Serves the main page where you can upload a file
 	http.HandleFunc("/", indexHandler)
 	// When you are given a valid link, this page shows you all the files

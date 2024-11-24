@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Send Files</title>
+  <link rel="stylesheet" href="/assets/style.css" />
+  <style>
+
+form div {
+  margin: 10px 0;
+}
+
+input[type="file"] {
+  border: none;
+  cursor: pointer;
+  font-size: large;
+}
+
+
+input[type="submit"] {
+  background-color: #1e90ff;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #3ea6ff;
+}
+
+  </style>
+</head>
+
+<body class="container-lg px-3 my-5 markdown-body">
+  <h1> Send Files </h1>
+  <a href="https://github.com/ubarar/send">(source code)</a>
+  <hr>
+  <form action="/uploadmultiple"  enctype="multipart/form-data" method="POST">
+    <div>
+      <input style="font-size: large" type="file" name="myFiles" multiple>
+    </div>
+    <div>
+      <input style="font-size: large" type="submit" value="Upload"/>
+    </div>
+  </form>
+  <hr></hr>
+</body>
+</html>

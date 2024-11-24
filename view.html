@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>View Files</title>
+  <link rel="stylesheet" href="/assets/style.css" />
+  <style>
+    button {
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #1e90ff;
+            color: #ffffff;
+
+    }
+  </style>
+
+</head>
+
+<body class="container-lg px-3 my-5 markdown-body">
+  <h1> View Files </h1>
+  <a href="https://github.com/ubarar/send">(source code)</a>
+  <hr>
+  <button onclick="copyLink()">📋 Copy Sharing Link</button> 
+  <hr>
+  <ul id="list">
+
+  </ul>
+  <hr></hr>
+</body>
+<script>
+  function copyLink() {
+    navigator.clipboard.writeText(window.location.href);
+  }
+
+  let stub = window.location.pathname.replace("/view/", "");
+
+  let xhr = new XMLHttpRequest();
+  xhr.open('GET', `/list/${stub}`, false);
+  xhr.send();
+  
+  let container = document.querySelector("#list")
+
+  let files = JSON.parse(xhr.responseText);
+
+  files.forEach(file => {
+    let li = document.createElement("li")
+    li.innerHTML = `<a href="/download/${stub}/${file}">${file}</a>`
+    container.appendChild(li)
+  })
+
+</script>
+</html>

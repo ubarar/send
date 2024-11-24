@@ -15,8 +15,8 @@ import (
 
 const MaxMemory = 1000000000 // 1GB
 
-func indexHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "./index.html")
+func uploadHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "./upload.html")
 }
 
 func viewHandler(w http.ResponseWriter, r *http.Request) {
@@ -75,13 +75,15 @@ func downloadHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	storage := flag.String("storage", ".", "where files will be stored")
+	storage := flag.String("storage", "./storage", "where files will be stored")
 	flag.Parse()
 
 	pkg.Initialize(*storage)
 
 	// Serves the main page where you can upload a file
-	http.HandleFunc("/", indexHandler)
+	http.HandleFunc("/", http.RedirectHandler("/upload", http.StatusSeeOther).ServeHTTP)
+
+	http.HandleFunc("/upload", uploadHandler)
 	// When you are given a valid link, this page shows you all the files
 	// that were uploaded
 	http.HandleFunc("/view/", viewHandler)

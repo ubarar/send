@@ -50,7 +50,7 @@
 
   files.forEach(file => {
     let li = document.createElement("li")
-    li.innerHTML = `<a href="/download/${stub}/${file}">${file}</a>`
+    li.innerHTML = `<a href="/download/${stub}/${encodeURIComponent(file)}">${file}</a>`
     container.appendChild(li)
   })
 
